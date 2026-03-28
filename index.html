@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Detector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg text-center transform hover:scale-105 transition duration-300">
+        <h2 class="text-3xl font-extrabold text-gray-800 mb-6">🚀 Spam Detector </h2>
+        <textarea id="textInput" class="w-full p-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-purple-400 outline-none text-gray-700 text-lg" rows="4" placeholder="Enter your message here..."></textarea>
+        <button onclick="checkSpam()" class="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-xl text-lg font-semibold shadow-lg hover:opacity-90 transition duration-300"> Check Message </button>
+        <div id="result" class="mt-6 text-2xl font-bold"></div>
+    </div>
+    
+    <script>
+        async function checkSpam() {
+            const text = document.getElementById('textInput').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = '';
+            resultDiv.className = 'mt-6 text-2xl font-bold';
+            
+            if (!text.trim()) {
+                resultDiv.textContent = '⚠️ Please enter a message to check.';
+                resultDiv.classList.add('text-red-600');
+                return;
+            }
+            
+            try {
+                const response = await fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                const data = await response.json();
+                resultDiv.textContent = ` Prediction: ${data.prediction}`;
+                resultDiv.classList.add(data.prediction === 'Spam' ? 'text-red-600' : 'text-green-600');
+            } catch (error) {
+                resultDiv.textContent = '❌ Error connecting to the server.';
+                resultDiv.classList.add('text-red-600');
+            }
+        }
+    </script>
+</body>
+</html>
