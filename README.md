@@ -23,7 +23,27 @@ This project detects spam messages using a Machine Learning model (SVM).
 
 2. Run the script:
    python Project.py
+# ✅ Final clean README snippet
 
+## 🌐 Web App
+This project includes a Flask-based web interface.
+
+Run the app:
+``bash
+python Project.py
+
+## 📈 Model Performance
+- Accuracy: 98.57%
+- Precision: High for both spam and non-spam classes
+- Recall: Strong detection capability
+
+## 📈 Model Performance
+- Accuracy: 98.57%
+- Precision: High for both spam and non-spam classes
+- Recall: Strong detection capability
+
+Classification report:
+(mention summary briefly)
  📈 Future Improvements
 - Deploy using Flask
 - Improve UI
